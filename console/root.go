@@ -1,7 +1,7 @@
 package console
 
 import (
-	"myapp/config"
+	"sim-u/config"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"

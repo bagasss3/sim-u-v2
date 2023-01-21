@@ -1,4 +1,4 @@
-module myapp
+module sim-u
 
 go 1.18
 

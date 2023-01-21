@@ -1,7 +1,7 @@
 package main
 
 import (
-	"myapp/console"
+	"sim-u/console"
 )
 
 func main() {
