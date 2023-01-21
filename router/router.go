@@ -1,7 +1,7 @@
 package router
 
 import (
-	"myapp/controller"
+	"sim-u/controller"
 
 	"github.com/labstack/echo/v4"
 )

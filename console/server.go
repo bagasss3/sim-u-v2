@@ -1,10 +1,10 @@
 package console
 
 import (
-	"myapp/config"
-	"myapp/database"
-	"myapp/middleware"
-	"myapp/router"
+	"sim-u/config"
+	"sim-u/database"
+	"sim-u/middleware"
+	"sim-u/router"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

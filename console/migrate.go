@@ -1,8 +1,8 @@
 package console
 
 import (
-	"myapp/config"
-	"myapp/database"
+	"sim-u/config"
+	"sim-u/database"
 
 	"github.com/pressly/goose/v3"
 
@@ -52,6 +52,6 @@ func migration(cmd *cobra.Command, args []string) {
 
 	log.WithFields(log.Fields{
 		"direction": direction,
-	}).Info("Success applied migrations!\n")
+	}).Info("Success applied migrations!")
 
 }

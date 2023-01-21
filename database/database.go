@@ -1,7 +1,7 @@
 package database
 
 import (
-	"myapp/config"
+	"sim-u/config"
 
 	log "github.com/sirupsen/logrus"
 
