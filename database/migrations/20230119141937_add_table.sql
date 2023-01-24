@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     access_token TEXT NOT NULL,
     refresh_token TEXT NOT NULL,
     refresh_token_expired_at timestamp NOT NULL,
-    user_id INTEGER NOT NULL,
+    user_id BIGINT NOT NULL,
     created_at timestamp NOT NULL DEFAULT 'now()',
     updated_at timestamp NOT NULL DEFAULT 'now()',
     deleted_at timestamp
