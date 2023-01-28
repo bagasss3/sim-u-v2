@@ -74,3 +74,28 @@ func ConnMaxIdleTime() time.Duration {
 func DBDSN() string {
 	return fmt.Sprintf("postgres://%s:%s@%s/%s", DBUser(), DBPassword(), DBHost(), DBDatabase())
 }
+
+func RedisHost() string {
+	return viper.GetString("redis.host")
+}
+
+func RedisDB() int {
+	if !viper.IsSet("redis.db") {
+		return 0
+	}
+	return viper.GetInt("redis.db")
+}
+
+func RedisPoolSize() int {
+	if !viper.IsSet("redis.poolSize") {
+		return 10
+	}
+	return viper.GetInt("redis.poolSize")
+}
+
+func RedisMaxIdleConns() int {
+	if !viper.IsSet("redis.maxIdleConns") {
+		return 10
+	}
+	return viper.GetInt("redis.maxIdleConns")
+}
