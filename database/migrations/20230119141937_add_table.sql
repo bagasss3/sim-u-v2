@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS student_organizations (
     user_id BIGINT NOT NULL,
     image_id BIGINT NULL,
     description TEXT NULL,
-    is_verified status_type,
+    status status_type,
     created_at timestamp NOT NULL DEFAULT 'now()',
     updated_at timestamp NOT NULL DEFAULT 'now()',
     deleted_at timestamp
@@ -126,22 +126,7 @@ CREATE TABLE categories (
     deleted_by BIGINT
 );
 
--- CreateTable
-CREATE TABLE eligibilities (
-    id BIGINT NOT NULL PRIMARY KEY,
-    name VARCHAR(191) NOT NULL,
-    description TEXT,
-    created_at timestamp NOT NULL DEFAULT 'now()',
-    created_by BIGINT NOT NULL,
-    updated_at timestamp NOT NULL DEFAULT 'now()',
-    updated_by BIGINT NOT NULL,
-    deleted_at timestamp,
-    deleted_by BIGINT
-);
-
-CREATE UNIQUE INDEX IF NOT EXISTS Category_name_key ON categories(name);
-
-CREATE UNIQUE INDEX IF NOT EXISTS Eligibility_name_key ON eligibilities(name);
+CREATE UNIQUE INDEX IF NOT EXISTS category_name_key ON categories(name);
 
 CREATE TABLE IF NOT EXISTS events (
     id BIGINT NOT NULL PRIMARY KEY,
@@ -151,9 +136,8 @@ CREATE TABLE IF NOT EXISTS events (
     image_id BIGINT NULL,
     description TEXT NOT NULL,
     precondition INTEGER NOT NULL DEFAULT 0,
-    is_verified status_type,
+    status status_type,
     category_id BIGINT NOT NULL,
-    eligibility_id BIGINT NOT NULL,
     created_at timestamp NOT NULL DEFAULT 'now()',
     created_by BIGINT NOT NULL,
     updated_at timestamp NOT NULL DEFAULT 'now()',
@@ -163,6 +147,8 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 ALTER TABLE events ADD FOREIGN KEY (student_organization_id) REFERENCES student_organizations(id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE events ADD FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 ALTER TABLE events ADD FOREIGN KEY (image_id) REFERENCES images(id) ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -219,7 +205,6 @@ DROP TABLE IF EXISTS eventcomments;
 DROP TABLE IF EXISTS eventpreconditions;
 DROP TABLE IF EXISTS eventstudents;
 DROP TABLE IF EXISTS events;
-DROP TABLE IF EXISTS eligibilities;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS students;
 DROP TABLE IF EXISTS student_organization_preconditions;
