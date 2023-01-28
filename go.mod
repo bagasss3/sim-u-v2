@@ -11,6 +11,11 @@ require (
 )
 
 require (
+	github.com/lib/pq v1.10.7 // indirect
+	gopkg.in/guregu/null.v4 v4.0.0 // indirect
+)
+
+require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-gorp/gorp/v3 v3.1.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect

@@ -2,9 +2,12 @@ package console
 
 import (
 	"sim-u/config"
+	"sim-u/controller"
 	"sim-u/database"
 	"sim-u/middleware"
+	"sim-u/repository"
 	"sim-u/router"
+	"sim-u/service"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
@@ -31,7 +34,10 @@ func server(cmd *cobra.Command, args []string) {
 	defer sqlDB.Close()
 
 	e := echo.New()
+	studentRepository := repository.NewStudentRepository(database.PostgresDB)
+	studentController := controller.NewStudentController(studentRepository)
+	studentService := service.NewStudentService(studentController)
 	e.Use(middleware.LogInfo)
-	router.RouterInit(e)
+	router.RouteService(e.Group(""), studentService)
 	e.Logger.Fatal(e.Start(":" + config.Port()))
 }
