@@ -26,6 +26,8 @@ func init() {
 }
 
 func server(cmd *cobra.Command, args []string) {
+	redisConn := database.InitRedis()
+	defer redisConn.Close()
 	database.InitDB()
 	sqlDB, err := database.PostgresDB.DB()
 	if err != nil {
