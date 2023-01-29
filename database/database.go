@@ -9,17 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	PostgresDB *gorm.DB
-)
-
-func InitDB() {
+func InitDB() *gorm.DB {
 	conn, err := openDB(config.DBDSN())
 	if err != nil {
 		log.WithField("dbDSN", config.DBDSN()).Fatal("Failed to connect:", err)
 	}
-	PostgresDB = conn
+
 	log.Info("Success connect database")
+	return conn
 }
 
 func openDB(dsn string) (*gorm.DB, error) {
