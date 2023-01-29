@@ -30,8 +30,8 @@ func migration(cmd *cobra.Command, args []string) {
 		log.Error(err)
 	}
 	goose.SetTableName("schema_migrations")
-	database.InitDB()
-	sqlDB, err := database.PostgresDB.DB()
+	postgresDB := database.InitDB()
+	sqlDB, err := postgresDB.DB()
 	if err != nil {
 		log.WithField("DatabaseDSN", config.DBDSN()).Fatal("Failed to connect database: ", err)
 	}
