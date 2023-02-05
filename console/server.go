@@ -34,11 +34,13 @@ func init() {
 func server(cmd *cobra.Command, args []string) {
 	// Initiate Connection
 	redisConn := database.InitRedis()
+	defer redisConn.Close()
 	PostgresDB := database.InitDB()
 	sqlDB, err := PostgresDB.DB()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer sqlDB.Close()
 
 	// Create Echo instance
 	httpServer := echo.New()
@@ -54,11 +56,12 @@ func server(cmd *cobra.Command, args []string) {
 	// Catch Signal
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
-		sighcan := make(chan os.Signal, 1)
-		signal.Notify(sighcan, syscall.SIGINT, syscall.SIGTERM)
-		defer signal.Stop(sighcan)
+		sigChan := make(chan os.Signal, 1)
+		signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+		defer signal.Stop(sigChan)
+		defer close(sigChan)
 
-		<-sighcan
+		<-sigChan
 		log.Info("Received termination signal, initiating graceful shutdown...")
 		cancel()
 	}()
@@ -79,14 +82,6 @@ func server(cmd *cobra.Command, args []string) {
 
 	if err := httpServer.Shutdown(ctx); err != nil {
 		log.Fatalf("Error shutting down server: %v", err)
-	}
-
-	if err := redisConn.Close(); err != nil {
-		log.Fatalf("Error closing down redis: %v", err)
-	}
-
-	if err := sqlDB.Close(); err != nil {
-		log.Fatalf("Error closing down database: %v", err)
 	}
 
 	log.Info("Server gracefully shut down")

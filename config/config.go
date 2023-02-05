@@ -79,6 +79,10 @@ func RedisHost() string {
 	return viper.GetString("redis.host")
 }
 
+func RedisWorkerHost() string {
+	return viper.GetString("redis.workerHost")
+}
+
 func RedisDB() int {
 	if !viper.IsSet("redis.db") {
 		return 0
@@ -98,4 +102,8 @@ func RedisMaxIdleConns() int {
 		return 10
 	}
 	return viper.GetInt("redis.maxIdleConns")
+}
+
+func WorkerName() string {
+	return viper.GetString("worker.name")
 }
